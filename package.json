@@ -1,0 +1,13 @@
+{
+  "name": "com.gameshalico.sound-weave",
+  "version": "0.1.0",
+  "displayName": "Sound Weave",
+  "description": "Flexible audio management library for Unity",
+  "unity": "6000.3",
+  "author": {
+    "name": "gameshalico"
+  },
+  "dependencies": {
+    "com.cysharp.unitask": "2.5.10"
+  }
+}
