@@ -31,7 +31,7 @@ namespace SoundWeave.Impl
             set => _audioSource.clip = value;
         }
 
-        public AudioMixerGroup OutputAudioMixerGroup
+        public AudioMixerGroup? OutputAudioMixerGroup
         {
             get => _audioSource.outputAudioMixerGroup;
             set => _audioSource.outputAudioMixerGroup = value;
@@ -92,8 +92,8 @@ namespace SoundWeave.Impl
             Setup(data);
             PlayAudioSource(data.TimingMode, data.TimingValue);
 
-            if (data.ScheduledEndTime >= 0)
-                SetScheduledEndTime(data.ScheduledEndTime);
+            if (data.ScheduledEndTime.HasValue)
+                SetScheduledEndTime(data.ScheduledEndTime.Value);
 
             return Handle;
         }
@@ -151,6 +151,9 @@ namespace SoundWeave.Impl
 
         private void Update()
         {
+            if (State == PlaybackState.Free)
+                return;
+
             if (State == PlaybackState.Waiting && _audioSource.isPlaying)
                 State = PlaybackState.Playing;
 

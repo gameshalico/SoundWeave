@@ -37,9 +37,20 @@ namespace SoundWeave.Impl
             if (_clipReference == null || !_clipReference.RuntimeKeyIsValid())
                 throw new InvalidOperationException("AudioClip reference is not set or invalid.");
 
-            _handle = _clipReference.LoadAssetAsync<AudioClip>();
-            _cachedClip = await _handle.ToUniTask(cancellationToken: cancellationToken);
-            _loaded = true;
+            AsyncOperationHandle<AudioClip> handle = _clipReference.LoadAssetAsync<AudioClip>();
+            try
+            {
+                await handle.ToUniTask(cancellationToken: cancellationToken);
+                _cachedClip = handle.Result;
+                _handle = handle;
+                _loaded = true;
+            }
+            catch
+            {
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+                throw;
+            }
         }
 
         public void Release()
@@ -50,6 +61,7 @@ namespace SoundWeave.Impl
             if (_handle.IsValid())
                 Addressables.Release(_handle);
 
+            _handle = default;
             _cachedClip = null;
             _loaded = false;
         }

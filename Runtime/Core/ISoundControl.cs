@@ -13,7 +13,7 @@ namespace SoundWeave
 
         Vector3 Position { get; set; }
         AudioClip Clip { get; set; }
-        AudioMixerGroup OutputAudioMixerGroup { get; set; }
+        AudioMixerGroup? OutputAudioMixerGroup { get; set; }
         bool IsPlaying { get; }
         float Time { get; set; }
         bool Mute { get; set; }

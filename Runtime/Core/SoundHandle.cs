@@ -47,7 +47,7 @@ namespace SoundWeave
             }
         }
 
-        public AudioMixerGroup OutputAudioMixerGroup
+        public AudioMixerGroup? OutputAudioMixerGroup
         {
             get
             {
@@ -214,21 +214,13 @@ namespace SoundWeave
         public void Pause()
         {
             ThrowIfInvalid();
-            var state = _control!.State;
-            if (state is PlaybackState.Free or PlaybackState.Paused)
-                throw new InvalidOperationException(
-                    $"Cannot pause SoundHandle in {state} state.");
-            _control.Pause();
+            _control!.Pause();
         }
 
         public void UnPause()
         {
             ThrowIfInvalid();
-            var state = _control!.State;
-            if (state != PlaybackState.Paused)
-                throw new InvalidOperationException(
-                    $"Cannot unpause SoundHandle in {state} state.");
-            _control.UnPause();
+            _control!.UnPause();
         }
 
         public void SetScheduledStartTime(double time)
@@ -263,5 +255,8 @@ namespace SoundWeave
         {
             return HashCode.Combine(_control, _version);
         }
+
+        public static bool operator ==(SoundHandle left, SoundHandle right) => left.Equals(right);
+        public static bool operator !=(SoundHandle left, SoundHandle right) => !left.Equals(right);
     }
 }

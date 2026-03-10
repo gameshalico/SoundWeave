@@ -35,7 +35,7 @@ namespace SoundWeave
             bool loop = false,
             TimingMode timingMode = TimingMode.Immediate,
             double timingValue = 0d,
-            double scheduledEndTime = -1d)
+            double? scheduledEndTime = null)
         {
             ThrowIfDisposed();
             _buffer.Position = position;
@@ -153,7 +153,7 @@ namespace SoundWeave
             }
         }
 
-        public double ScheduledEndTime
+        public double? ScheduledEndTime
         {
             get
             {
@@ -282,7 +282,7 @@ namespace SoundWeave
             {
                 Position = _buffer.Position,
                 Clip = _buffer.Clip,
-                OutputAudioMixerGroup = _buffer.OutputAudioMixerGroup!,
+                OutputAudioMixerGroup = _buffer.OutputAudioMixerGroup,
                 Mute = _buffer.Mute,
                 Volume = _buffer.Volume,
                 Pitch = _buffer.Pitch,

@@ -9,7 +9,7 @@ namespace SoundWeave
     {
         public Vector3 Position { get; init; }
         public AudioClip Clip { get; init; }
-        public AudioMixerGroup OutputAudioMixerGroup { get; init; }
+        public AudioMixerGroup? OutputAudioMixerGroup { get; init; }
         public bool Mute { get; init; }
         public float Volume { get; init; }
         public float Pitch { get; init; }
@@ -19,6 +19,6 @@ namespace SoundWeave
         public bool Loop { get; init; }
         public TimingMode TimingMode { get; init; }
         public double TimingValue { get; init; }
-        public double ScheduledEndTime { get; init; }
+        public double? ScheduledEndTime { get; init; }
     }
 }

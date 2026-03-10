@@ -52,6 +52,9 @@ namespace SoundWeave.Impl
 
         internal void ReturnToPool(WeaveSoundPlayer player)
         {
+            if (!player.gameObject.activeSelf)
+                return;
+
             _freeCount++;
             player.gameObject.SetActive(false);
         }

@@ -7,8 +7,11 @@ namespace SoundWeave
 {
     internal sealed class SoundBuilderBuffer
     {
+        private const int MaxPoolSize = 64;
+
         private static readonly SoundBuilderBuffer s_sentinel = new();
         private static SoundBuilderBuffer s_poolHead = s_sentinel;
+        private static int s_poolSize;
 
         private SoundBuilderBuffer? _next;
 
@@ -26,7 +29,7 @@ namespace SoundWeave
         public bool Loop;
         public TimingMode TimingMode = TimingMode.Immediate;
         public double TimingValue;
-        public double ScheduledEndTime = -1d;
+        public double? ScheduledEndTime;
 
         public static SoundBuilderBuffer Rent()
         {
@@ -36,6 +39,7 @@ namespace SoundWeave
             var result = s_poolHead;
             s_poolHead = result._next ?? s_sentinel;
             result._next = null;
+            s_poolSize--;
             return result;
         }
 
@@ -44,11 +48,12 @@ namespace SoundWeave
             buffer.Version++;
             buffer.Reset();
 
-            if (buffer.Version == ushort.MaxValue)
+            if (buffer.Version == ushort.MaxValue || s_poolSize >= MaxPoolSize)
                 return;
 
             buffer._next = s_poolHead;
             s_poolHead = buffer;
+            s_poolSize++;
         }
 
         private void Reset()
@@ -65,7 +70,7 @@ namespace SoundWeave
             Loop = false;
             TimingMode = TimingMode.Immediate;
             TimingValue = 0d;
-            ScheduledEndTime = -1d;
+            ScheduledEndTime = null;
         }
     }
 }
