@@ -29,7 +29,7 @@ namespace SoundWeave.Impl
 
             if (_warnOnNullMixerGroup && data.OutputAudioMixerGroup == null)
                 Debug.LogWarning(
-                    $"SoundWeave: OutputAudioMixerGroup is null. Clip: {data.Clip.name}",
+                    $"SoundWeave: OutputAudioMixerGroup is null. Clip: {data.Clip?.name}",
                     player);
 
             return player.Play(data);

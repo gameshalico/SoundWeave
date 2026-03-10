@@ -14,11 +14,7 @@ namespace SoundWeave.Tests
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
-                var data = new SoundData
-                {
-                    Clip = clip,
-                    Volume = 0.5f,
-                };
+                var data = new SoundData(clip, volume: 0.5f);
                 var player = new MockSoundPlayer();
 
                 var handle = data.Play(player);

@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 
 namespace SoundWeave
 {
+    /// <remarks>メインスレッド専用。マルチスレッドからの Rent/Return は未サポート。</remarks>
     internal sealed class SoundBuilderBuffer
     {
         private const int MaxPoolSize = 64;

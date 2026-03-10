@@ -68,10 +68,18 @@ namespace SoundWeave
 
         private void Prune()
         {
-            for (var i = _handles.Count - 1; i >= 0; i--)
+            var i = 0;
+            while (i < _handles.Count)
             {
                 if (!_handles[i].IsActive())
-                    _handles.RemoveAt(i);
+                {
+                    _handles[i] = _handles[^1];
+                    _handles.RemoveAt(_handles.Count - 1);
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
 

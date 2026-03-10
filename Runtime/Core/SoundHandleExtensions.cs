@@ -14,12 +14,12 @@ namespace SoundWeave
             return AudioSettings.dspTime - self.PlayDspTime;
         }
 
-        public static SoundHandle WithCancellation(
+        public static CancellationTokenRegistration WithCancellation(
             this SoundHandle self,
             CancellationToken ct,
             SoundCancellationMode mode = SoundCancellationMode.None)
         {
-            ct.Register(() =>
+            return ct.Register(() =>
             {
                 if (!self.IsActive())
                     return;
@@ -34,8 +34,6 @@ namespace SoundWeave
                         break;
                 }
             });
-
-            return self;
         }
 
         public static async UniTask ToUniTask(

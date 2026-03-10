@@ -278,22 +278,20 @@ namespace SoundWeave
             if (_buffer.Clip == null)
                 throw new InvalidOperationException("The AudioClip is null.");
 
-            var data = new SoundData
-            {
-                Position = _buffer.Position,
-                Clip = _buffer.Clip,
-                OutputAudioMixerGroup = _buffer.OutputAudioMixerGroup,
-                Mute = _buffer.Mute,
-                Volume = _buffer.Volume,
-                Pitch = _buffer.Pitch,
-                Priority = _buffer.Priority,
-                PanStereo = _buffer.PanStereo,
-                StartSample = _buffer.StartSample,
-                Loop = _buffer.Loop,
-                TimingMode = _buffer.TimingMode,
-                TimingValue = _buffer.TimingValue,
-                ScheduledEndTime = _buffer.ScheduledEndTime,
-            };
+            var data = new SoundData(
+                _buffer.Clip,
+                _buffer.Position,
+                _buffer.OutputAudioMixerGroup,
+                _buffer.Mute,
+                _buffer.Volume,
+                _buffer.Pitch,
+                _buffer.Priority,
+                _buffer.PanStereo,
+                _buffer.StartSample,
+                _buffer.Loop,
+                _buffer.TimingMode,
+                _buffer.TimingValue,
+                _buffer.ScheduledEndTime);
 
             Dispose();
             return data;

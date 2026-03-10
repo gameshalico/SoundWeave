@@ -32,6 +32,11 @@ namespace SoundWeave
 
         public void Remove(TKey key)
         {
+            _groups.Remove(key);
+        }
+
+        public void StopAndRemove(TKey key)
+        {
             if (!_groups.TryGetValue(key, out var group))
                 return;
 
@@ -40,6 +45,11 @@ namespace SoundWeave
         }
 
         public void Clear()
+        {
+            _groups.Clear();
+        }
+
+        public void StopAndClear()
         {
             foreach (var group in _groups.Values)
                 group.StopAll();

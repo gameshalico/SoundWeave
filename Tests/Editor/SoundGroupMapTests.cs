@@ -54,7 +54,7 @@ namespace SoundWeave.Tests
         }
 
         [Test]
-        public void Remove_ExistingKey_StopsAllAndRemovesGroup()
+        public void Remove_ExistingKey_RemovesGroupWithoutStopping()
         {
             var control = new MockSoundControl();
             var handle = new SoundHandle(control);
@@ -62,7 +62,7 @@ namespace SoundWeave.Tests
 
             _map.Remove("sfx");
 
-            Assert.That(control.StopCalled, Is.True);
+            Assert.That(control.StopCalled, Is.False);
             Assert.That(_map.TryGet("sfx", out _), Is.False);
         }
 
@@ -73,7 +73,26 @@ namespace SoundWeave.Tests
         }
 
         [Test]
-        public void Clear_StopsAllGroupsAndRemovesAll()
+        public void StopAndRemove_ExistingKey_StopsAllAndRemovesGroup()
+        {
+            var control = new MockSoundControl();
+            var handle = new SoundHandle(control);
+            _map["sfx"].Add(handle);
+
+            _map.StopAndRemove("sfx");
+
+            Assert.That(control.StopCalled, Is.True);
+            Assert.That(_map.TryGet("sfx", out _), Is.False);
+        }
+
+        [Test]
+        public void StopAndRemove_NonExistingKey_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => _map.StopAndRemove("none"));
+        }
+
+        [Test]
+        public void Clear_RemovesAllWithoutStopping()
         {
             var c1 = new MockSoundControl();
             var c2 = new MockSoundControl();
@@ -81,6 +100,22 @@ namespace SoundWeave.Tests
             _map["bgm"].Add(new SoundHandle(c2));
 
             _map.Clear();
+
+            Assert.That(c1.StopCalled, Is.False);
+            Assert.That(c2.StopCalled, Is.False);
+            Assert.That(_map.TryGet("sfx", out _), Is.False);
+            Assert.That(_map.TryGet("bgm", out _), Is.False);
+        }
+
+        [Test]
+        public void StopAndClear_StopsAllGroupsAndRemovesAll()
+        {
+            var c1 = new MockSoundControl();
+            var c2 = new MockSoundControl();
+            _map["sfx"].Add(new SoundHandle(c1));
+            _map["bgm"].Add(new SoundHandle(c2));
+
+            _map.StopAndClear();
 
             Assert.That(c1.StopCalled, Is.True);
             Assert.That(c2.StopCalled, Is.True);

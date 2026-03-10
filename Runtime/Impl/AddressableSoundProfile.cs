@@ -23,7 +23,7 @@ namespace SoundWeave.Impl
         [SerializeField] private float _panStereo;
         [SerializeField] private int _startSample;
         [SerializeField] private bool _loop;
-        [SerializeField] private double _delay;
+        [SerializeField, Min(0)] private double _delay;
 
         private AudioClip? _cachedClip;
         private AsyncOperationHandle<AudioClip> _handle;

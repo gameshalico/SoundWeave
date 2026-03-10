@@ -29,26 +29,24 @@ namespace SoundWeave.Tests
         }
 
         [Test]
-        public void Init_SetsAllProperties()
+        public void Constructor_SetsAllProperties()
         {
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
-                var data = new SoundData
-                {
-                    Clip = clip,
-                    Volume = 0.8f,
-                    Pitch = 1.2f,
-                    Priority = 64,
-                    PanStereo = -0.5f,
-                    Mute = true,
-                    Loop = true,
-                    StartSample = 100,
-                    TimingMode = TimingMode.Delay,
-                    TimingValue = 2.0,
-                    ScheduledEndTime = 10.0,
-                    Position = new Vector3(1, 2, 3),
-                };
+                var data = new SoundData(
+                    clip,
+                    position: new Vector3(1, 2, 3),
+                    mute: true,
+                    volume: 0.8f,
+                    pitch: 1.2f,
+                    priority: 64,
+                    panStereo: -0.5f,
+                    startSample: 100,
+                    loop: true,
+                    timingMode: TimingMode.Delay,
+                    timingValue: 2.0,
+                    scheduledEndTime: 10.0);
 
                 Assert.That(data.Clip, Is.EqualTo(clip));
                 Assert.That(data.Volume, Is.EqualTo(0.8f));
@@ -75,20 +73,18 @@ namespace SoundWeave.Tests
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
-                var data = new SoundData
-                {
-                    Clip = clip,
-                    Volume = 0.6f,
-                    Pitch = 1.3f,
-                    Priority = 32,
-                    PanStereo = 0.7f,
-                    Mute = true,
-                    Loop = true,
-                    StartSample = 200,
-                    TimingMode = TimingMode.Schedule,
-                    TimingValue = 50.0,
-                    ScheduledEndTime = 60.0,
-                };
+                var data = new SoundData(
+                    clip,
+                    mute: true,
+                    volume: 0.6f,
+                    pitch: 1.3f,
+                    priority: 32,
+                    panStereo: 0.7f,
+                    loop: true,
+                    startSample: 200,
+                    timingMode: TimingMode.Schedule,
+                    timingValue: 50.0,
+                    scheduledEndTime: 60.0);
 
                 using var builder = data.ToBuilder();
 
