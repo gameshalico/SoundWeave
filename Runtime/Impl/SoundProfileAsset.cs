@@ -6,8 +6,8 @@ using UnityEngine.Audio;
 
 namespace SoundWeave.Impl
 {
-    [Serializable]
-    public sealed class SoundProfile : ISoundProfileFactory
+    [CreateAssetMenu(fileName = "SoundProfileAsset", menuName = "SoundWeave/Sound Profile Asset")]
+    public sealed class SoundProfileAsset : ScriptableObject, ISoundProfileFactory
     {
         [SerializeReference] private IClipSource _clipSource = new DirectClipSource();
         [SerializeField] private AudioMixerGroup? _outputAudioMixerGroup;
