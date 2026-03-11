@@ -10,7 +10,7 @@ namespace SoundWeave
     public readonly struct SoundData
     {
         [SerializeField] private readonly Vector3 _position;
-        [SerializeField] private readonly AudioClip? _clip;
+        [SerializeField] private readonly IAudioGenerator.Serializable _audioGenerator;
         [SerializeField] private readonly AudioMixerGroup? _outputAudioMixerGroup;
         [SerializeField] private readonly bool _mute;
         [SerializeField] private readonly float _volume;
@@ -24,7 +24,7 @@ namespace SoundWeave
         [SerializeField] private readonly double? _scheduledEndTime;
 
         public Vector3 Position => _position;
-        public AudioClip? Clip => _clip;
+        public IAudioGenerator.Serializable AudioGenerator => _audioGenerator;
         public AudioMixerGroup? OutputAudioMixerGroup => _outputAudioMixerGroup;
         public bool Mute => _mute;
         public float Volume => _volume;
@@ -38,7 +38,7 @@ namespace SoundWeave
         public double? ScheduledEndTime => _scheduledEndTime;
 
         public SoundData(
-            AudioClip? clip,
+            IAudioGenerator.Serializable audioGenerator,
             Vector3 position = default,
             AudioMixerGroup? outputAudioMixerGroup = null,
             bool mute = false,
@@ -52,7 +52,7 @@ namespace SoundWeave
             double timingValue = 0d,
             double? scheduledEndTime = null)
         {
-            _clip = clip;
+            _audioGenerator = audioGenerator;
             _position = position;
             _outputAudioMixerGroup = outputAudioMixerGroup;
             _mute = mute;

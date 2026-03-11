@@ -3,6 +3,7 @@
 using System;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace SoundWeave.Tests
 {
@@ -14,7 +15,7 @@ namespace SoundWeave.Tests
         {
             using var builder = SoundBuilder.Create();
 
-            Assert.That(builder.Clip, Is.Null);
+            Assert.That(builder.AudioGenerator, Is.Null);
             Assert.That(builder.Volume, Is.EqualTo(1f));
             Assert.That(builder.Pitch, Is.EqualTo(1f));
             Assert.That(builder.Priority, Is.EqualTo(128));
@@ -170,8 +171,9 @@ namespace SoundWeave.Tests
             try
             {
                 var player = new MockSoundPlayer();
+                var audioGenerator = new IAudioGenerator.Serializable(clip);
                 var builder = SoundBuilder.Create()
-                    .WithClip(clip)
+                    .WithAudioGenerator(audioGenerator)
                     .WithVolume(0.8f)
                     .WithPitch(1.5f)
                     .WithLoop(true);
@@ -179,7 +181,7 @@ namespace SoundWeave.Tests
                 var handle = builder.Play(player);
 
                 Assert.That(player.PlayedData.Count, Is.EqualTo(1));
-                Assert.That(player.PlayedData[0].Clip, Is.EqualTo(clip));
+                Assert.That(player.PlayedData[0].AudioGenerator, Is.EqualTo(audioGenerator));
                 Assert.That(player.PlayedData[0].Volume, Is.EqualTo(0.8f));
                 Assert.That(player.PlayedData[0].Pitch, Is.EqualTo(1.5f));
                 Assert.That(player.PlayedData[0].Loop, Is.True);
@@ -202,7 +204,7 @@ namespace SoundWeave.Tests
                 var player = new MockSoundPlayer();
                 var pos = new Vector3(1, 2, 3);
                 SoundBuilder.Create()
-                    .WithClip(clip)
+                    .WithAudioGenerator(new IAudioGenerator.Serializable(clip))
                     .WithPosition(pos)
                     .Play(player);
 

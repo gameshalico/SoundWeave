@@ -1,7 +1,5 @@
 #nullable enable
 
-using System;
-using System.Collections.Generic;
 using SoundWeave.Impl;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -73,9 +71,9 @@ namespace SoundWeave.Editor
             {
                 case ClipSourceType.Direct:
                 {
-                    var clipProperty = clipSourceProperty.FindPropertyRelative("_clip");
+                    var clipProperty = clipSourceProperty.FindPropertyRelative("_audioGenerator");
                     if (clipProperty != null)
-                        container.Add(new PropertyField(clipProperty) { label = "AudioClip" });
+                        container.Add(new PropertyField(clipProperty) { label = "Audio Resource" });
                     break;
                 }
 #if SOUNDWEAVE_ADDRESSABLES_SUPPORT
@@ -83,7 +81,7 @@ namespace SoundWeave.Editor
                 {
                     var refProperty = clipSourceProperty.FindPropertyRelative("_clipReference");
                     if (refProperty != null)
-                        container.Add(new PropertyField(refProperty) { label = "AudioClip (Addressable)" });
+                        container.Add(new PropertyField(refProperty) { label = "Audio Resource (Addressable)" });
                     break;
                 }
 #endif

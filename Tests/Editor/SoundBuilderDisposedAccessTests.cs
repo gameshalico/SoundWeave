@@ -18,8 +18,8 @@ namespace SoundWeave.Tests
         }
 
         [Test]
-        public void Clip_Throws() =>
-            Assert.Throws<ObjectDisposedException>(() => { _ = _disposed.Clip; });
+        public void AudioGenerator_Throws() =>
+            Assert.Throws<ObjectDisposedException>(() => { _ = _disposed.AudioGenerator; });
 
         [Test]
         public void OutputAudioMixerGroup_Throws() =>

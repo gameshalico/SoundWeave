@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace SoundWeave.Tests
 {
@@ -16,12 +17,12 @@ namespace SoundWeave.Tests
             {
                 var player = new MockSoundPlayer();
                 var handle = SoundBuilder.Create()
-                    .WithClip(clip)
+                    .WithAudioGenerator(new IAudioGenerator.Serializable(clip))
                     .WithVolume(0.7f)
                     .Play(player);
 
                 Assert.That(player.PlayedData.Count, Is.EqualTo(1));
-                Assert.That(player.PlayedData[0].Clip, Is.EqualTo(clip));
+                Assert.That(player.PlayedData[0].AudioGenerator, Is.EqualTo(new IAudioGenerator.Serializable(clip)));
                 Assert.That(player.PlayedData[0].Volume, Is.EqualTo(0.7f));
                 Assert.That(handle.IsActive(), Is.True);
             }

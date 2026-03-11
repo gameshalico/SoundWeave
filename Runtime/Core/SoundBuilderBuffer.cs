@@ -19,7 +19,7 @@ namespace SoundWeave
         public ushort Version { get; private set; }
 
         public Vector3 Position;
-        public AudioClip? Clip;
+        public IAudioGenerator.Serializable? AudioGenerator;
         public AudioMixerGroup? OutputAudioMixerGroup;
         public bool Mute;
         public float Volume = 1f;
@@ -60,7 +60,7 @@ namespace SoundWeave
         private void Reset()
         {
             Position = Vector3.zero;
-            Clip = null;
+            AudioGenerator = null;
             OutputAudioMixerGroup = null;
             Mute = false;
             Volume = 1f;

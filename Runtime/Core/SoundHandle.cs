@@ -33,17 +33,17 @@ namespace SoundWeave
             }
         }
 
-        public AudioClip Clip
+        public IAudioGenerator AudioGenerator
         {
             get
             {
                 ThrowIfInvalid();
-                return _control!.Clip;
+                return _control!.AudioGenerator;
             }
             set
             {
                 ThrowIfInvalid();
-                _control!.Clip = value;
+                _control!.AudioGenerator = value;
             }
         }
 

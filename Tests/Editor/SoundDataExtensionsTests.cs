@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace SoundWeave.Tests
 {
@@ -14,7 +15,7 @@ namespace SoundWeave.Tests
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
-                var data = new SoundData(clip, volume: 0.5f);
+                var data = new SoundData(new IAudioGenerator.Serializable(clip), volume: 0.5f);
                 var player = new MockSoundPlayer();
 
                 var handle = data.Play(player);

@@ -29,7 +29,7 @@ namespace SoundWeave.Impl
                     "ClipSource is not ready. Call ClipSource.LoadAsync() first.");
 
             return SoundBuilder.Create().WithAllParams(
-                Vector3.zero, _clipSource.Clip, _outputAudioMixerGroup, _mute, _volume, _pitch,
+                Vector3.zero, _clipSource.AudioGenerator, _outputAudioMixerGroup, _mute, _volume, _pitch,
                 _priority, _panStereo, _startSample, _loop,
                 _delay <= 0 ? TimingMode.Immediate : TimingMode.Delay, _delay);
         }

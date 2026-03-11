@@ -11,7 +11,7 @@ namespace SoundWeave.Tests
         public PlaybackState State { get; set; }
         public double PlayDspTime { get; set; }
         public Vector3 Position { get; set; }
-        public AudioClip Clip { get; set; } = null!;
+        public IAudioGenerator AudioGenerator { get; set; } = null!;
         public AudioMixerGroup? OutputAudioMixerGroup { get; set; }
         public bool IsPlaying { get; set; }
         public float Time { get; set; }

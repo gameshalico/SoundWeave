@@ -24,7 +24,7 @@ namespace SoundWeave
 
         internal SoundBuilder WithAllParams(
             Vector3 position,
-            AudioClip? clip,
+            IAudioGenerator.Serializable? audioGenerator,
             AudioMixerGroup? outputAudioMixerGroup = null,
             bool mute = false,
             float volume = 1f,
@@ -39,7 +39,7 @@ namespace SoundWeave
         {
             ThrowIfDisposed();
             _buffer.Position = position;
-            _buffer.Clip = clip;
+            _buffer.AudioGenerator = audioGenerator;
             _buffer.OutputAudioMixerGroup = outputAudioMixerGroup;
             _buffer.Mute = mute;
             _buffer.Volume = volume;
@@ -54,12 +54,12 @@ namespace SoundWeave
             return this;
         }
 
-        public AudioClip? Clip
+        public IAudioGenerator.Serializable? AudioGenerator
         {
             get
             {
                 ThrowIfDisposed();
-                return _buffer.Clip;
+                return _buffer.AudioGenerator;
             }
         }
 
@@ -171,10 +171,10 @@ namespace SoundWeave
             }
         }
 
-        public SoundBuilder WithClip(AudioClip clip)
+        public SoundBuilder WithAudioGenerator(IAudioGenerator.Serializable audioGenerator)
         {
             ThrowIfDisposed();
-            _buffer.Clip = clip;
+            _buffer.AudioGenerator = audioGenerator;
             return this;
         }
 
@@ -275,11 +275,11 @@ namespace SoundWeave
         {
             ThrowIfDisposed();
 
-            if (_buffer.Clip == null)
-                throw new InvalidOperationException("The AudioClip is null.");
+            if (_buffer.AudioGenerator is not { } audioGenerator)
+                throw new InvalidOperationException("The audio resource is null.");
 
             var data = new SoundData(
-                _buffer.Clip,
+                audioGenerator,
                 _buffer.Position,
                 _buffer.OutputAudioMixerGroup,
                 _buffer.Mute,

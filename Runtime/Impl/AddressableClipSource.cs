@@ -6,6 +6,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Audio;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace SoundWeave.Impl
@@ -15,11 +16,11 @@ namespace SoundWeave.Impl
     {
         [SerializeField] private AssetReferenceT<AudioClip>? _clipReference;
 
-        private AudioClip? _cachedClip;
+        private IAudioGenerator.Serializable? _cachedAudioGenerator;
         private AsyncOperationHandle<AudioClip> _handle;
         private bool _loaded;
 
-        public AudioClip? Clip => _cachedClip;
+        public IAudioGenerator.Serializable? AudioGenerator => _cachedAudioGenerator;
         public bool IsReady => _loaded;
 
         public async UniTask LoadAsync(CancellationToken cancellationToken = default)
@@ -34,7 +35,7 @@ namespace SoundWeave.Impl
             try
             {
                 await handle.ToUniTask(cancellationToken: cancellationToken);
-                _cachedClip = handle.Result;
+                _cachedAudioGenerator = new IAudioGenerator.Serializable(handle.Result);
                 _handle = handle;
                 _loaded = true;
             }
@@ -55,7 +56,7 @@ namespace SoundWeave.Impl
                 Addressables.Release(_handle);
 
             _handle = default;
-            _cachedClip = null;
+            _cachedAudioGenerator = null;
             _loaded = false;
         }
     }

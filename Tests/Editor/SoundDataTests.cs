@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace SoundWeave.Tests
 {
@@ -14,7 +15,7 @@ namespace SoundWeave.Tests
             var data = new SoundData();
 
             Assert.That(data.Position, Is.EqualTo(Vector3.zero));
-            Assert.That(data.Clip, Is.Null);
+            Assert.That(data.AudioGenerator.definition, Is.Null);
             Assert.That(data.OutputAudioMixerGroup, Is.Null);
             Assert.That(data.Mute, Is.False);
             Assert.That(data.Volume, Is.EqualTo(0f));
@@ -34,8 +35,9 @@ namespace SoundWeave.Tests
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
+                var audioGenerator = new IAudioGenerator.Serializable(clip);
                 var data = new SoundData(
-                    clip,
+                    audioGenerator,
                     position: new Vector3(1, 2, 3),
                     mute: true,
                     volume: 0.8f,
@@ -48,7 +50,7 @@ namespace SoundWeave.Tests
                     timingValue: 2.0,
                     scheduledEndTime: 10.0);
 
-                Assert.That(data.Clip, Is.EqualTo(clip));
+                Assert.That(data.AudioGenerator, Is.EqualTo(audioGenerator));
                 Assert.That(data.Volume, Is.EqualTo(0.8f));
                 Assert.That(data.Pitch, Is.EqualTo(1.2f));
                 Assert.That(data.Priority, Is.EqualTo(64));
@@ -73,8 +75,9 @@ namespace SoundWeave.Tests
             var clip = AudioClip.Create("test", 44100, 1, 44100, false);
             try
             {
+                var audioGenerator = new IAudioGenerator.Serializable(clip);
                 var data = new SoundData(
-                    clip,
+                    audioGenerator,
                     mute: true,
                     volume: 0.6f,
                     pitch: 1.3f,
@@ -88,7 +91,7 @@ namespace SoundWeave.Tests
 
                 using var builder = data.ToBuilder();
 
-                Assert.That(builder.Clip, Is.EqualTo(clip));
+                Assert.That(builder.AudioGenerator, Is.EqualTo(audioGenerator));
                 Assert.That(builder.Volume, Is.EqualTo(0.6f));
                 Assert.That(builder.Pitch, Is.EqualTo(1.3f));
                 Assert.That(builder.Priority, Is.EqualTo(32));

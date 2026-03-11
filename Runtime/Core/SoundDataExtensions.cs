@@ -14,7 +14,7 @@ namespace SoundWeave
         public static SoundBuilder ToBuilder(this SoundData data)
         {
             return SoundBuilder.Create().WithAllParams(
-                data.Position, data.Clip, data.OutputAudioMixerGroup,
+                data.Position, data.AudioGenerator, data.OutputAudioMixerGroup,
                 data.Mute, data.Volume, data.Pitch, data.Priority,
                 data.PanStereo, data.StartSample, data.Loop,
                 data.TimingMode, data.TimingValue, data.ScheduledEndTime);

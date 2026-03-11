@@ -25,10 +25,10 @@ namespace SoundWeave.Impl
             set => transform.position = value;
         }
 
-        public AudioClip Clip
+        public IAudioGenerator AudioGenerator
         {
-            get => _audioSource.clip;
-            set => _audioSource.clip = value;
+            get => _audioSource.generator;
+            set => _audioSource.generator = value;
         }
 
         public AudioMixerGroup? OutputAudioMixerGroup
@@ -218,7 +218,7 @@ namespace SoundWeave.Impl
             }
 
             transform.position = data.Position;
-            _audioSource.clip = data.Clip;
+            _audioSource.generator = data.AudioGenerator.definition;
             _audioSource.loop = data.Loop;
             _audioSource.outputAudioMixerGroup = data.OutputAudioMixerGroup;
             _audioSource.mute = data.Mute;

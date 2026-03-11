@@ -63,15 +63,15 @@ namespace SoundWeave.Tests
         }
 
         [Test]
-        public void Clip_Get_WhenInvalid_Throws()
+        public void AudioGenerator_Get_WhenInvalid_Throws()
         {
-            Assert.Throws<InvalidOperationException>(() => { _ = _invalidHandle.Clip; });
+            Assert.Throws<InvalidOperationException>(() => { _ = _invalidHandle.AudioGenerator; });
         }
 
         [Test]
-        public void Clip_Set_WhenInvalid_Throws()
+        public void AudioGenerator_Set_WhenInvalid_Throws()
         {
-            Assert.Throws<InvalidOperationException>(() => _invalidHandle.Clip = null!);
+            Assert.Throws<InvalidOperationException>(() => _invalidHandle.AudioGenerator = null!);
         }
 
         [Test]
