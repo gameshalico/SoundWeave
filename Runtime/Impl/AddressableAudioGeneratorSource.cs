@@ -12,7 +12,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace SoundWeave.Impl
 {
     [Serializable]
-    public sealed class AddressableClipSource : IClipSource
+    public sealed class AddressableAudioGeneratorSource : IAudioGeneratorSource
     {
         [SerializeField] private AssetReferenceT<AudioClip>? _clipReference;
 

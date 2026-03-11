@@ -9,7 +9,7 @@ using UnityEngine.Audio;
 namespace SoundWeave.Impl
 {
     [Serializable]
-    public sealed class DirectClipSource : IClipSource
+    public sealed class DirectAudioGeneratorSource : IAudioGeneratorSource
     {
         [SerializeField] private IAudioGenerator.Serializable _audioGenerator;
 

@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 namespace SoundWeave
 {
-    public interface IClipSource
+    public interface IAudioGeneratorSource
     {
         IAudioGenerator.Serializable? AudioGenerator { get; }
         bool IsReady { get; }

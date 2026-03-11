@@ -17,7 +17,7 @@ namespace SoundWeave.Editor
             var container = new VisualElement();
 
             var clipSourceProperty = property.FindPropertyRelative("_clipSource");
-            ClipSourceDrawerHelper.AddClipSourceFields(container, clipSourceProperty);
+            AudioGeneratorSourceDrawerHelper.AddGeneratorSourceFields(container, clipSourceProperty);
 
             var outputProperty = property.FindPropertyRelative("_outputAudioMixerGroup");
             var muteProperty = property.FindPropertyRelative("_mute");

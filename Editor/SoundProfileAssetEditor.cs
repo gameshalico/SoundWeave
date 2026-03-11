@@ -16,7 +16,7 @@ namespace SoundWeave.Editor
             var container = new VisualElement();
 
             var clipSourceProperty = serializedObject.FindProperty("_clipSource");
-            ClipSourceDrawerHelper.AddClipSourceFields(container, clipSourceProperty);
+            AudioGeneratorSourceDrawerHelper.AddGeneratorSourceFields(container, clipSourceProperty);
 
             container.Add(new PropertyField(serializedObject.FindProperty("_outputAudioMixerGroup")) { label = "Output" });
             container.Add(new PropertyField(serializedObject.FindProperty("_mute")));
