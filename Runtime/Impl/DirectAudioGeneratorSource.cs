@@ -18,13 +18,20 @@ namespace SoundWeave.Impl
 
         public bool IsReady => _audioGenerator.definition != null;
 
-        public UniTask LoadAsync(CancellationToken cancellationToken = default)
+        public UniTask<IDisposable> LoadAsync(CancellationToken cancellationToken = default)
         {
-            return UniTask.CompletedTask;
+            return UniTask.FromResult<IDisposable>(new DummyDisposable());
         }
 
         public void Release()
         {
+        }
+
+        private class DummyDisposable : IDisposable
+        {
+            public void Dispose()
+            {
+            }
         }
     }
 }

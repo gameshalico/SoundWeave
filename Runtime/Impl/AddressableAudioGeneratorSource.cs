@@ -23,10 +23,10 @@ namespace SoundWeave.Impl
         public IAudioGenerator.Serializable? AudioGenerator => _cachedAudioGenerator;
         public bool IsReady => _loaded;
 
-        public async UniTask LoadAsync(CancellationToken cancellationToken = default)
+        public async UniTask<IDisposable> LoadAsync(CancellationToken cancellationToken = default)
         {
             if (_loaded)
-                return;
+                return new DisposableAction(Release);
 
             if (_clipReference == null || !_clipReference.RuntimeKeyIsValid())
                 throw new InvalidOperationException("AudioClip reference is not set or invalid.");
@@ -45,6 +45,7 @@ namespace SoundWeave.Impl
                     Addressables.Release(handle);
                 throw;
             }
+            return new DisposableAction(Release);
         }
 
         public void Release()
@@ -58,6 +59,26 @@ namespace SoundWeave.Impl
             _handle = default;
             _cachedAudioGenerator = null;
             _loaded = false;
+        }
+
+        private class DisposableAction : IDisposable
+        {
+            private readonly Action _disposeAction;
+            private bool _disposed;
+
+            public DisposableAction(Action disposeAction)
+            {
+                _disposeAction = disposeAction;
+            }
+
+            public void Dispose()
+            {
+                if (_disposed)
+                    return;
+
+                _disposeAction();
+                _disposed = true;
+            }
         }
     }
 }

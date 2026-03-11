@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Audio;
@@ -10,7 +11,7 @@ namespace SoundWeave
     {
         IAudioGenerator.Serializable? AudioGenerator { get; }
         bool IsReady { get; }
-        UniTask LoadAsync(CancellationToken cancellationToken = default);
+        UniTask<IDisposable> LoadAsync(CancellationToken cancellationToken = default);
         void Release();
     }
 }
